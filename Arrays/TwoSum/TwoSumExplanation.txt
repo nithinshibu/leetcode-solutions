@@ -1,0 +1,42 @@
+Code Explanation:
+
+In this solution, I am using Dictionary<int,int>.
+
+Suppose,int[] nums = { 2, 7, 11, 15 };
+int target = 9;
+
+So I am looping the array and finding the complement.
+Target=9, First value of Array=2, Complement = 9-2=7.
+Complement=7.
+
+I am checking whether the dictionary already has a key as the same as complement, which means that the current index and the complement will give us the target as sum.
+
+In the first iteration, I will be inserting two values into the dictionary,
+Complement = 2 as the key and its index in the array as value = 1.
+
+In the 2nd iteration, i=1, nums[i]=7, complement = (7-9)=2.
+We know that 2 is already inserted as a key in the dictionary during the first iteration.
+
+So, map contains the complement (2) , so return the result as new integer array with values as 
+Map[complement] and i.
+
+Here map[complement] means map[2] and which will give us the index of 2 which is 0. And also this means that the current value of nums[i] which is 7 will sum up to the target so return that “i” also.
+To be more precise, i=1, nums[i]=7 and we require its index so returning i along with map[2] will return the result as [0,1].
+
+
+Complexity:
+
+Time Complexity:
+
+The time complexity of this solution is O(n), where n is the number of elements in the input array nums.
+This is because we iterate through the array once, visiting each element exactly once.
+Inside the loop, the operations involving the Dictionary (e.g., checking for the complement, adding elements) are constant time operations.
+Therefore, the overall time complexity is dominated by the single pass through the input array, resulting in a linear time complexity of O(n).
+
+Space Complexity:
+
+
+The space complexity of this solution is also O(n), where n is the number of elements in the input array nums.
+We use a Dictionary to store the indices of elements we've seen so far.
+In the worst-case scenario, where no two elements sum up to the target, we might need to store all elements of the input array in the dictionary.
+Therefore, the space complexity is directly proportional to the number of elements in the input array, resulting in a linear space complexity of O(n).

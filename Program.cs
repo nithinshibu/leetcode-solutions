@@ -1,20 +1,20 @@
-﻿int[] nums = { 0, 1, 0, 3, 12 };
-MoveZeroes(nums);
-Console.WriteLine(string.Join(", ", nums));
+﻿int[] arr = { 1, 2, 3, 4, 6 };
+int target = 6;
+var result = FindPairWithSum(arr, target);
+if (result != null)
+    Console.WriteLine($"Pair: {result[0]}, {result[1]}");
+else
+    Console.WriteLine("No pair found.");
 
-static void MoveZeroes(int[] nums)
+static int[] FindPairWithSum(int[] arr, int target)
 {
-    int index = 0;
-    for (int i = 0; i < nums.Length; i++)
+    int left = 0, right = arr.Length - 1;
+    while (left < right)
     {
-        if (nums[i] != 0)
-        {
-            nums[index++] = nums[i];
-        }
+        int sum = arr[left] + arr[right];
+        if (sum == target) return new int[] { arr[left], arr[right] };
+        else if (sum < target) left++;
+        else right--;
     }
-
-    for (int i = index; i < nums.Length; i++)
-    {
-        nums[i] = 0;
-    }
+    return null; // No pair found
 }

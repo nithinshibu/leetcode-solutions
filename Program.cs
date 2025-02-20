@@ -1,20 +1,20 @@
-﻿static bool ValidParentheses(string input)
+﻿int[] nums = { 0, 1, 0, 3, 12 };
+MoveZeroes(nums);
+Console.WriteLine(string.Join(", ", nums));
+
+static void MoveZeroes(int[] nums)
 {
-    Stack<char> openingPairs = new();
-
-    Dictionary<char,char> brackets = new Dictionary<char, char>()
+    int index = 0;
+    for (int i = 0; i < nums.Length; i++)
     {
-        { '{','}'},
-        { '(',')'},
-        { '[',']'}
-    };
-
-    foreach(var c in brackets)
-    {
-        if(!Dictionary)
+        if (nums[i] != 0)
+        {
+            nums[index++] = nums[i];
+        }
     }
 
-
-
+    for (int i = index; i < nums.Length; i++)
+    {
+        nums[i] = 0;
+    }
 }
-

@@ -27,8 +27,6 @@ Update maxLen if current window is longer
  
  */
 
-using System.ComponentModel.DataAnnotations;
-
 namespace LeetCodeSolutions.Top_50_Hacker_Rank
 {
     internal class Q07_Longest_Substring_Without_Repeating_Characters
@@ -36,19 +34,40 @@ namespace LeetCodeSolutions.Top_50_Hacker_Rank
 
         public int LengthOfLongestNonRepeatSubstring(string s)
         {
+            //left: Marks the left boundary of our current window
+            //maxLen: Keeps track of the longest valid substring length found so far
             int left = 0, maxLen = 0;
 
+            //HashSet is perfect here because it provides O(1) lookup and doesn't allow duplicates
             var seen = new HashSet<char>();
 
-            for(int right = 0; right < s.Length; right++)
+            //Iterates through the string using right as the right boundary of our window.This implements the sliding window technique
+            for (int right = 0; right < s.Length; right++)
             {
+                /*
+
+                If the current character is already in our HashSet, we need to shrink the window:
+
+                Remove characters from the left side of the window
+                Move the left pointer forward
+                Continue this until we've removed the duplicate of our current character.
+
+                */
+
                 while (seen.Contains(s[right]))
                 {
-                    seen.Remove(s[right]);
+                    seen.Remove(s[left]);
                     left++;
                 }
                 seen.Add(s[right]);
-                maxLen= Math.Max(maxLen, right - left + 1);
+
+                /*
+
+                Calculate the length of current window (right - left + 1)
+                Update maxLen if the current window is longer than our previous maximum.
+
+                */
+                maxLen = Math.Max(maxLen, right - left + 1);
             }
 
             return maxLen;
@@ -57,13 +76,40 @@ namespace LeetCodeSolutions.Top_50_Hacker_Rank
 
         public string LongestNonRepeatedSubString(string s)
         {
+            /*
+
+            Initializes three variables:
+
+            left: Current window's left boundary
+            maxLen: Length of the longest valid substring
+            bestLeft: New variable that stores the starting index of the longest substring found
+
+
+            */
+
             int left =0,maxLen = 0;
             int bestLeft = 0; //track the starting position of the best substring
-            var seen = new HashSet<char>();
 
+            /*
+
+            Same as before: creates a HashSet for unique characters
+            Uses sliding window technique with right pointer
+
+
+            */
+
+            var seen = new HashSet<char>();
 
             for(int right=0;right < s.Length; right++)
             {
+                /*
+
+                If current character exists in HashSet, shrink window from left
+                Add current character to HashSet
+
+
+                */
+
                 while (seen.Contains(s[right]))
                 {
                     seen.Remove(s[left]);
@@ -74,13 +120,43 @@ namespace LeetCodeSolutions.Top_50_Hacker_Rank
 
                 //if we found a larger substring , update both length and starting position 
 
-                if(right - left +1 > maxLen)
+                /*
+
+                Key difference from previous version:
+
+                Instead of using Math.Max, we use an if condition
+                When we find a longer substring, we:
+
+                Update maxLen with new length
+                Store the left index where this longest substring begins
+
+
+                */
+
+                if (right - left +1 > maxLen)
                 {
                     maxLen = right - left + 1;  
                     bestLeft = left;
                 }
             }
             // Return the substring using the stored position and length
+            /*
+
+            Returns the actual substring using:
+
+            bestLeft: Starting position of the longest substring
+            maxLen: Length of the substring
+
+
+
+            For example, with input "abcabcbb":
+
+            First unique substring "abc" (bestLeft = 0, maxLen = 3)
+            When we hit second 'a', window shifts
+            Final result would be "abc" (the actual substring, not just length 3)
+
+
+            */
             return s.Substring(bestLeft, maxLen);
 
         }
